@@ -26,7 +26,15 @@ namespace Catalogo.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(Produto produto)
         {
-            await ArmazenaProduto(produto);
+            try
+            {
+                await ArmazenaProduto(produto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
             await EnviaMsg(produto);   
             return Ok();
         }
